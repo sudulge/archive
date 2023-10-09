@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+
 {% if question_list %}
     <ul>
     {% for question in question_list %}
@@ -7,3 +10,7 @@
 {% else %}
     <p>질문이 없습니다.</p>S
 {% endif %}
+
+<a href="{% url 'archive:question_create' %}">질문 등록하기</a>
+
+{% endblock %}
