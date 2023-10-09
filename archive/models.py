@@ -2,15 +2,21 @@ from django.db import models
 
 # Create your models here.
 
-class Question(models.Model):
-    subject = models.CharField(max_length=200)
+class Movie(models.Model):
+    title = models.CharField(max_length=200)
     content = models.TextField()
+    thumbnail = models.ImageField(upload_to='archive/movie', null=True, blank=True)
     create_date = models.DateTimeField()
 
     def __str__(self):
-        return self.subject
+        return self.title
 
-class Answer(models.Model):
-    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+class Book(models.Model):
+    title = models.CharField(max_length=200)
+    author = models.CharField(max_length=200)
     content = models.TextField()
+    thumbnail = models.ImageField(upload_to='archive/book', null=True, blank=True)
     create_date = models.DateTimeField()
+
+    def __str__(self):
+        return self.title

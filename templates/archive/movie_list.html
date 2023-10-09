@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<a href="{% url 'archive:movie_index' %}"> 영화 탭</a>
+<a href="{% url 'archive:book_index' %}"> 책 탭</a>
+
+{% if movie_list %}
+    <ul>
+    {% for movie in movie_list %}
+        <li><a href="{% url 'archive:movie_detail' movie.id %}">{{ movie.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>영화가 없습니다.</p>S
+{% endif %}
+
+<!-- 페이징처리 시작 -->
+<ul>
+    {% if movie_list.has_previous %}
+    <li>
+        <a href="?page={{ movie_list.previous_page_number }}">이전</a>
+    </li>
+    {% else %}
+    <li>
+        <a aria-disabled="true" href="#">이전</a>
+    </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in movie_list.paginator.page_range %}
+    {% if page_number >= movie_list.number|add:-5 and page_number <= movie_list.number|add:5 %}
+    {% if page_number == movie_list.number %}
+    <li aria-current="page">
+        <a href="?page={{ page_number }}">{{page_number}}</a>
+    </li>
+    {% else %}
+    <li>
+        <a href="?page={{ page_number }}">{{page_number}}</a>
+    </li>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if movie_list.has_next %}
+    <li>
+        <a href="?page={{ movie_list.next_page_number }}">다음</a>
+    </li>
+    {% else %}
+    <li>
+        <a aria-disabled="true" href="#">다음</a>
+    </li>
+    {% endif %}
+</ul>
+<!-- 페이징처리 끝 -->
+<a href="{% url 'archive:movie_create' %}">영화 등록하기</a>
+
+{% endblock %}

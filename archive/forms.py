@@ -1,20 +1,24 @@
 from django import forms
-from archive.models import Question, Answer
+from archive.models import Movie, Book
 
 
-class QuestionForm(forms.ModelForm):
+class MovieForm(forms.ModelForm):
     class Meta:
-        model = Question
-        fields = ['subject', 'content']
+        model = Movie
+        fields = ['title', 'content', 'thumbnail']
         labels = {
-            'subject': '제목',
+            'title': '제목',
             'content': '내용',
+            'thumbnail': '대표이미지'
         }
 
-class AnswerForm(forms.ModelForm):
+class BookForm(forms.ModelForm):
     class Meta:
-        model = Answer
-        fields = ['content']
+        model = Book
+        fields = ['title', 'author', 'content', 'thumbnail']
         labels = {
-            'content': '답변내용',
+            'title': '제목',
+            'author': '작가',
+            'content': '내용',
+            'thumbnail': '대표이미지'
         }

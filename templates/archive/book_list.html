@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<a href="{% url 'archive:movie_index' %}"> 영화 탭</a>
+<a href="{% url 'archive:book_index' %}"> 책 탭</a>
+
+{% if book_list %}
+    <ul>
+    {% for book in book_list %}
+        <li><a href="{% url 'archive:book_detail' book.id %}">{{ book.title }} - {{ book.author }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>책이 없습니다.</p>S
+{% endif %}
+
+<!-- 페이징처리 시작 -->
+<ul>
+    {% if book_list.has_previous %}
+    <li>
+        <a href="?page={{ book_list.previous_page_number }}">이전</a>
+    </li>
+    {% else %}
+    <li>
+        <a aria-disabled="true" href="#">이전</a>
+    </li>
+    {% endif %}
+    <!-- 페이지리스트 -->
+    {% for page_number in book_list.paginator.page_range %}
+    {% if page_number >= book_list.number|add:-5 and page_number <= book_list.number|add:5 %}
+    {% if page_number == book_list.number %}
+    <li aria-current="page">
+        <a href="?page={{ page_number }}">{{page_number}}</a>
+    </li>
+    {% else %}
+    <li>
+        <a href="?page={{ page_number }}">{{page_number}}</a>
+    </li>
+    {% endif %}
+    {% endif %}
+    {% endfor %}
+    <!-- 다음페이지 -->
+    {% if book_list.has_next %}
+    <li>
+        <a href="?page={{ book_list.next_page_number }}">다음</a>
+    </li>
+    {% else %}
+    <li>
+        <a aria-disabled="true" href="#">다음</a>
+    </li>
+    {% endif %}
+</ul>
+<!-- 페이징처리 끝 -->
+<a href="{% url 'archive:book_create' %}">책 등록하기</a>
+
+{% endblock %}
