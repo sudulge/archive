@@ -5,5 +5,9 @@
 <div>
     {{ movie.content }}
 </div>
-
+{% if movie.thumbnail %}
+    <img src="{{ movie.thumbnail.url }}" alt="{{ movie.title }}">
+{% else %}
+    <img src="/media/archive/movie/movie_default_thumbnail.png" alt="movie thumbnail">
+{% endif %}
 {% endblock %}

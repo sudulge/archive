@@ -16,4 +16,3 @@ urlpatterns = [
     path('movie/create', views.movie_create, name='movie_create'),
     path('book/create', views.book_create, name='book_create'),
 ]
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

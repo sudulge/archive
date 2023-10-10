@@ -3,7 +3,7 @@
 
 <div class="container">
     <h5>책등록</h5>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         <!-- 오류표시 Start -->
         {% if form.errors %}
@@ -30,6 +30,10 @@
         <div>
             <label for="content">내용</label>
             <textarea name="content" id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
+        </div>
+        <div>
+            <label for="thumbnail">대표 이미지</label>
+            <input type="file" name="thumbnail" id="thumbnail">
         </div>
         <button type="submit">저장하기</button>
     </form>

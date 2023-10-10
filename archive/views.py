@@ -35,7 +35,8 @@ def book_detail(request, book_id):
 
 def movie_create(request):
     if request.method == 'POST': # POST 요청 question_form.html 에서 저장하기 버튼을 클릭 했을 때
-        form = MovieForm(request.POST)
+        form = MovieForm(request.POST, request.FILES)
+        print(request.FILES)
         if form.is_valid():
             movie = form.save(commit=False)
             movie.create_date = timezone.now()
@@ -48,7 +49,7 @@ def movie_create(request):
 
 def book_create(request):
     if request.method == 'POST':
-        form = BookForm(request.POST)
+        form = BookForm(request.POST, request.FILES)
         if form.is_valid():
             book = form.save(commit=False)
             book.create_date = timezone.now()

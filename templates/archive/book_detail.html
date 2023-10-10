@@ -6,5 +6,11 @@
 <div>
     {{ book.content }}
 </div>
+{% if book.thumbnail %}
+    <img src="{{ book.thumbnail.url }}" alt="{{ book.title }}">
+{% else %}
+    <img src="/media/archive/book/book_default_thumbnail.png" alt="book thumbnail">
+{% endif %}
+
 
 {% endblock %}

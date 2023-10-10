@@ -1,27 +1,56 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<a href="{% url 'archive:movie_index' %}"> 영화 탭</a>
-<a href="{% url 'archive:book_index' %}"> 책 탭</a>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbit&display=swap" rel="stylesheet">
 
-{% if movie_list %}
-    <ul>
-    {% for movie in movie_list %}
-        <li><a href="{% url 'archive:movie_detail' movie.id %}">{{ movie.title }}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>영화가 없습니다.</p>S
-{% endif %}
+<div class="tab_container">
+    <div class="tab_wrapper">
+        <div class="tab active_tab">
+            <a href="{% url 'archive:movie_index' %}">영화</a>
+        </div>
+        <div class="tab">
+            <a href="{% url 'archive:book_index' %}">책</a>
+        </div>
+    </div>
+    <div class="create_button">
+        <a href="{% url 'archive:movie_create' %}">글 추가</a>
+    </div>
+</div>
+
+<div class="list_wrapper">
+    {% if movie_list %}
+        <ul>
+        {% for movie in movie_list %}
+            <li>
+                <div class="content_wrapper">
+                    <a href="{% url 'archive:movie_detail' movie.id %}">
+                        {% if movie.thumbnail %}
+                            <img src="{{ movie.thumbnail.url }}" alt="{{ movie.title }}">
+                        {% else %}
+                            <img src="/media/archive/movie/movie_default_thumbnail.png" alt="movie thumbnail">
+                        {% endif %}
+                    </a>
+                    <div class="content_title">{{ movie.title }}</div>
+                </div>
+            </li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>영화가 없습니다.</p>
+    {% endif %}
+</div>
+
 
 <!-- 페이징처리 시작 -->
-<ul>
+<ul class="pagenation">
     {% if movie_list.has_previous %}
-    <li>
+    <li class="page_item">
         <a href="?page={{ movie_list.previous_page_number }}">이전</a>
     </li>
     {% else %}
-    <li>
+    <li class="page_item">
         <a aria-disabled="true" href="#">이전</a>
     </li>
     {% endif %}
@@ -29,11 +58,11 @@
     {% for page_number in movie_list.paginator.page_range %}
     {% if page_number >= movie_list.number|add:-5 and page_number <= movie_list.number|add:5 %}
     {% if page_number == movie_list.number %}
-    <li aria-current="page">
+    <li class="page_item current_page">
         <a href="?page={{ page_number }}">{{page_number}}</a>
     </li>
     {% else %}
-    <li>
+    <li class="page_item">
         <a href="?page={{ page_number }}">{{page_number}}</a>
     </li>
     {% endif %}
@@ -41,16 +70,15 @@
     {% endfor %}
     <!-- 다음페이지 -->
     {% if movie_list.has_next %}
-    <li>
+    <li class="page_item">
         <a href="?page={{ movie_list.next_page_number }}">다음</a>
     </li>
     {% else %}
-    <li>
+    <li class="page_item">
         <a aria-disabled="true" href="#">다음</a>
     </li>
     {% endif %}
 </ul>
 <!-- 페이징처리 끝 -->
-<a href="{% url 'archive:movie_create' %}">영화 등록하기</a>
 
 {% endblock %}
