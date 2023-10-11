@@ -15,10 +15,10 @@ class MovieForm(forms.ModelForm):
 class BookForm(forms.ModelForm):
     class Meta:
         model = Book
-        fields = ['title', 'author', 'content', 'thumbnail']
+        fields = ['title', 'book_author', 'content', 'thumbnail']
         labels = {
             'title': '제목',
-            'author': '작가',
+            'book_author': '작가',
             'content': '내용',
             'thumbnail': '대표이미지'
         }

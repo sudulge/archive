@@ -19,14 +19,14 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-from archive import views
+from archive.views import movie_views
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('archive/', include('archive.urls')),
     path('common/', include('common.urls')),
-    path('', views.movie_index, name='movie_index'), # '/'에 해당되는 path
+    path('', movie_views.movie_index, name='movie_index'), # '/'에 해당되는 path
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
