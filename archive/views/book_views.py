@@ -3,16 +3,25 @@ from django.utils import timezone
 from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+from django.db.models import Q
 from ..models import Book
 from ..forms import BookForm
 
 
 def book_index(request):
     page = request.GET.get('page', '1')
+    query = request.GET.get('query', '')
     book_list = Book.objects.order_by('create_date')
+    if query:
+        book_list = book_list.filter(
+            Q(title__icontains=query) |
+            Q(content__icontains=query) |
+            Q(book_author__icontains=query) |
+            Q(author__username__icontains=query)
+        ).distinct()
     paginator = Paginator(book_list, 10)
     page_obj = paginator.get_page(page)
-    context = {'book_list': page_obj}
+    context = {'book_list': page_obj, 'page': page, 'query': query}
     return render(request, 'archive/book_list.html', context)
 
 

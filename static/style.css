@@ -25,7 +25,7 @@ header {
     justify-content: space-between;
     width: 100%;
     height: auto;
-    padding-top: 180px;
+    padding-top: 30px;
     margin-bottom: 20px;
     font-size: 40px;
     font-family: 'Orbit';
@@ -92,6 +92,31 @@ header {
 
 .tab a {
     font-size: 30px;
+}
+
+.search_box {
+    display: flex;
+    align-items: center;
+}
+.search_box input {
+    width: 300px;
+    height: 45px;
+    border: 0;
+    border-bottom: 1px solid black;
+    margin-right: 5px;
+    padding-left: 15px;
+    outline: 0;
+    background-color: azure;
+    font-size: 20pt;
+}
+.search_box button {
+    width: 45px;
+    height: 45px;
+    border: 0;
+    background-color: azure;
+    font-size: 13pt;
+    background-image: url('../media/archive/asdf.png');
+    cursor: pointer;
 }
 
 .create_button {
@@ -187,12 +212,13 @@ header {
     font-family: 'Nanum Gothic', sans-serif;
     font-size: 40pt;
 }
-
+.title h3 {
+    margin: 0;
+}
 .data_wrapper {
     display: flex;
     justify-content: space-between;
     align-items: flex-end;
-    margin-bottom: 50px;
     border-bottom: 1px solid black;
     padding-bottom: 10px;
 }
@@ -227,6 +253,7 @@ header {
 
 .content_area {
     display: flex;
+    margin-top: 50px;
 }
 .content_area img{
     width: 297px;

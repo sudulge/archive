@@ -11,6 +11,12 @@
                 <a href="{% url 'archive:book_index' %}">책</a>
             </div>
         </div>
+        <div class="search_box">
+            <input type="text" id="search_query" value="{{ search_query|default_if_none:'' }}" placeholder="책 검색">
+            <div class="search_button">
+                <button type="button" id="search_button"></button>
+            </div>
+        </div>
         <div class="create_button">
             <a href="{% url 'archive:book_create' %}">글 추가</a>
         </div>
@@ -43,11 +49,11 @@
     <ul class="pagenation">
         {% if book_list.has_previous %}
         <li class="page_item">
-            <a href="?page={{ book_list.previous_page_number }}">이전</a>
+            <a class="page_link" data-page="{{ book_list.previous_page_number }}" href="javascript:void(0)">이전</a>
         </li>
         {% else %}
         <li class="page_item">
-            <a aria-disabled="true" href="#">이전</a>
+            <a class="page_link" aria-disabled="true" href="javascript:void(0)">이전</a>
         </li>
         {% endif %}
         <!-- 페이지리스트 -->
@@ -55,11 +61,11 @@
         {% if page_number >= book_list.number|add:-5 and page_number <= book_list.number|add:5 %}
         {% if page_number == book_list.number %}
         <li class="page_item current_page">
-            <a href="?page={{ page_number }}">{{page_number}}</a>
+            <a class="page_link" data-page="{{ page_number }}" href="javascript:void(0)">{{page_number}}</a>
         </li>
         {% else %}
         <li class="page_item">
-            <a href="?page={{ page_number }}">{{page_number}}</a>
+            <a class="page_link" data-page="{{ page_number }}" href="javascript:void(0)">{{page_number}}</a>
         </li>
         {% endif %}
         {% endif %}
@@ -67,15 +73,37 @@
         <!-- 다음페이지 -->
         {% if book_list.has_next %}
         <li class="page_item">
-            <a href="?page={{ book_list.next_page_number }}">다음</a>
+            <a class="page_link" data-page="{{ book_list.next_page_number }}" href="javascript:void(0)">다음</a>
         </li>
         {% else %}
         <li class="page_item">
-            <a aria-disabled="true" href="#">다음</a>
+            <a class="page_link" aria-disabled="true" href="javascript:void(0)">다음</a>
         </li>
         {% endif %}
     </ul>
     <!-- 페이징처리 끝 -->
 </div>
+<form id="searchForm" method="get" action="{% url 'archive:book_index' %}">
+    <input type="hidden" id="query" name="query" value="{{ query|default_if_none:'' }}">
+    <input type="hidden" id="page" name="page" value="{{ page }}">
+</form>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+    const page_elements = document.getElementsByClassName("page_link");
+    Array.from(page_elements).forEach(function(element) {
+        element.addEventListener('click', function() {
+            document.getElementById('page').value = this.dataset.page;
+            document.getElementById('searchForm').submit();
+        });
+    });
+    const search_button = document.getElementById("search_button");
+    search_button.addEventListener('click', function() {
+        document.getElementById('query').value = document.getElementById('search_query').value;
+        document.getElementById('page').value = 1;
+        document.getElementById('searchForm').submit();
+    });
+</script>
 
 {% endblock %}
