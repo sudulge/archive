@@ -1,83 +1,81 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbit&display=swap" rel="stylesheet">
-
-<div class="tab_container">
-    <div class="tab_wrapper">
-        <div class="tab">
-            <a href="{% url 'archive:movie_index' %}">영화</a>
+<div class="main_wrapper">
+    <div class="tab_container">
+        <div class="tab_wrapper">
+            <div class="tab">
+                <a href="{% url 'archive:movie_index' %}">영화</a>
+            </div>
+            <div class="tab active_tab">
+                <a href="{% url 'archive:book_index' %}">책</a>
+            </div>
         </div>
-        <div class="tab active_tab">
-            <a href="{% url 'archive:book_index' %}">책</a>
+        <div class="create_button">
+            <a href="{% url 'archive:book_create' %}">글 추가</a>
         </div>
     </div>
-    <div class="create_button">
-        <a href="{% url 'archive:book_create' %}">글 추가</a>
+    
+    <div class="list_wrapper">
+        {% if book_list %}
+            <ul>
+            {% for book in book_list %}
+                <li>
+                    <div class="content_wrapper">
+                        <a href="{% url 'archive:book_detail' book.id %}">
+                            {% if book.thumbnail %}
+                                <img src="{{ book.thumbnail.url }}" alt="{{ book.title }}">
+                            {% else %}
+                                <img src="/media/archive/book/book_default_thumbnail.png" alt="book thumbnail">
+                            {% endif %}
+                        </a>
+                        <div class="content_title">{{ book.title }}</div>
+                    </div>
+                </li>
+            {% endfor %}
+            </ul>
+        {% else %}
+            <p>책이 없습니다.</p>
+        {% endif %}
     </div>
-</div>
-
-<div class="list_wrapper">
-    {% if book_list %}
-        <ul>
-        {% for book in book_list %}
-            <li>
-                <div class="content_wrapper">
-                    <a href="{% url 'archive:book_detail' book.id %}">
-                        {% if book.thumbnail %}
-                            <img src="{{ book.thumbnail.url }}" alt="{{ book.title }}">
-                        {% else %}
-                            <img src="/media/archive/book/book_default_thumbnail.png" alt="book thumbnail">
-                        {% endif %}
-                    </a>
-                    <div class="content_title">{{ book.title }}</div>
-                </div>
-            </li>
+    
+    <!-- 페이징처리 시작 -->
+    <ul class="pagenation">
+        {% if book_list.has_previous %}
+        <li class="page_item">
+            <a href="?page={{ book_list.previous_page_number }}">이전</a>
+        </li>
+        {% else %}
+        <li class="page_item">
+            <a aria-disabled="true" href="#">이전</a>
+        </li>
+        {% endif %}
+        <!-- 페이지리스트 -->
+        {% for page_number in book_list.paginator.page_range %}
+        {% if page_number >= book_list.number|add:-5 and page_number <= book_list.number|add:5 %}
+        {% if page_number == book_list.number %}
+        <li class="page_item current_page">
+            <a href="?page={{ page_number }}">{{page_number}}</a>
+        </li>
+        {% else %}
+        <li class="page_item">
+            <a href="?page={{ page_number }}">{{page_number}}</a>
+        </li>
+        {% endif %}
+        {% endif %}
         {% endfor %}
-        </ul>
-    {% else %}
-        <p>책이 없습니다.</p>
-    {% endif %}
+        <!-- 다음페이지 -->
+        {% if book_list.has_next %}
+        <li class="page_item">
+            <a href="?page={{ book_list.next_page_number }}">다음</a>
+        </li>
+        {% else %}
+        <li class="page_item">
+            <a aria-disabled="true" href="#">다음</a>
+        </li>
+        {% endif %}
+    </ul>
+    <!-- 페이징처리 끝 -->
 </div>
-
-<!-- 페이징처리 시작 -->
-<ul class="pagenation">
-    {% if book_list.has_previous %}
-    <li class="page_item">
-        <a href="?page={{ book_list.previous_page_number }}">이전</a>
-    </li>
-    {% else %}
-    <li class="page_item">
-        <a aria-disabled="true" href="#">이전</a>
-    </li>
-    {% endif %}
-    <!-- 페이지리스트 -->
-    {% for page_number in book_list.paginator.page_range %}
-    {% if page_number >= book_list.number|add:-5 and page_number <= book_list.number|add:5 %}
-    {% if page_number == book_list.number %}
-    <li class="page_item current_page">
-        <a href="?page={{ page_number }}">{{page_number}}</a>
-    </li>
-    {% else %}
-    <li class="page_item">
-        <a href="?page={{ page_number }}">{{page_number}}</a>
-    </li>
-    {% endif %}
-    {% endif %}
-    {% endfor %}
-    <!-- 다음페이지 -->
-    {% if book_list.has_next %}
-    <li class="page_item">
-        <a href="?page={{ book_list.next_page_number }}">다음</a>
-    </li>
-    {% else %}
-    <li class="page_item">
-        <a aria-disabled="true" href="#">다음</a>
-    </li>
-    {% endif %}
-</ul>
-<!-- 페이징처리 끝 -->
 
 {% endblock %}

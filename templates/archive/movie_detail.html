@@ -1,44 +1,63 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<!-- message 표시 -->
-{% if messages %}
-<div class="alert" role="alert">
-    {% for message in messages %}
-        <strong>{{ message.tags }}</strong>
-        <ul><li>{{ message.message }}</li></ul>
-    {% endfor %}
-</div>
-{% endif %}
-<h1>{{ movie.title }}</h1>
-<div>
-    작성자: {{ movie.author.username }}
-</div>
-<div>
-    {{ movie.create_date }}
-</div>
-<div>
-    {% if movie.modify_date %}
-    <div>
-        마지막 수정일자: {{ movie.modify_date }}
+<div class="main_wrapper">
+    <!-- message 표시 -->
+    {% if messages %}
+    <div class="alert" role="alert">
+        {% for message in messages %}
+            <strong>{{ message.tags }}</strong>
+            <ul><li>{{ message.message }}</li></ul>
+        {% endfor %}
     </div>
     {% endif %}
+
+    <div class="detail_header">
+        <div class="title">
+            <h3>{{ movie.title }}</h3>
+        </div>
+        <div class="data_wrapper">
+            <div class="article_data">
+                <div class="author">
+                    {{ movie.author.username }}
+                </div>
+                <div class="create_date">
+                    {{ movie.create_date }}
+                </div>
+            </div>
+
+            <div class="modify_area">
+                {% if movie.modify_date %}
+                <div class="modify_date">
+                    마지막 수정일자: {{ movie.modify_date }}
+                </div>
+                {% endif %}
+                {% if request.user == movie.author %}
+                <div class="modify_buttons">
+                    <a href="{% url 'archive:movie_modify' movie.id %}">수정</a>
+                    <a href="javascript:void(0)" class="delete" data-uri="{% url 'archive:movie_delete' movie.id %}">삭제</a>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <div class="content_area">
+        <div class="thumbnail">
+            {% if movie.thumbnail %}
+            <img src="{{ movie.thumbnail.url }}" alt="{{ movie.title }}">
+            {% else %}
+            <img src="/media/archive/movie/movie_default_thumbnail.png" alt="movie thumbnail">
+            {% endif %}
+        </div>
+        <div class="text_area">
+            {{ movie.content }}
+        </div>
+    </div>
 </div>
-<div>
-    {% if request.user == movie.author %}
-    <a href="{% url 'archive:movie_modify' movie.id %}">수정</a>
-    <a href="javascript:void(0)" class="delete" data-uri="{% url 'archive:movie_delete' movie.id %}">삭제</a>
-    {% endif %}
-</div>
-<div>
-    {{ movie.content }}
-</div>
-{% if movie.thumbnail %}
-    <img src="{{ movie.thumbnail.url }}" alt="{{ movie.title }}">
-{% else %}
-    <img src="/media/archive/movie/movie_default_thumbnail.png" alt="movie thumbnail">
-{% endif %}
+
 {% endblock %}
+
 
 {% block script %}
 <script type="text/javascript">

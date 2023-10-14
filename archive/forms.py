@@ -18,7 +18,7 @@ class BookForm(forms.ModelForm):
         fields = ['title', 'book_author', 'content', 'thumbnail']
         labels = {
             'title': '제목',
-            'book_author': '작가',
+            'book_author': '지은이',
             'content': '내용',
             'thumbnail': '대표이미지'
         }
