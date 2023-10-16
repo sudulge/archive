@@ -1,29 +1,35 @@
 {% extends 'base.html' %}
 {% block content %}
 
-<div class="container">
-    <h5>책등록</h5>
+<div class="main_wrapper">
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% include "form_errors.html" %}
         <div>
-            <label for="title">제목</label>
-            <input type="text" name="title" id="title" value="{{ form.title.value|default_if_none:'' }}">
+            <input type="text" name="title" id="title" value="{{ form.title.value|default_if_none:'' }}" placeholder="제목을 입력하세요">
         </div>
         <div>
-            <label for="book_author">지은이</label>
-            <input type="text" name="book_author" id="book_author" value="{{ form.book_author.value|default_if_none:'' }}">
+            <input type="text" name="book_author" id="book_author" value="{{ form.book_author.value|default_if_none:'' }}" placeholder="지은이">
         </div>
         <div>
-            <label for="content">내용</label>
             <textarea name="content" id="content" rows="10">{{ form.content.value|default_if_none:'' }}</textarea>
         </div>
         <div>
             <label for="thumbnail">대표 이미지</label>
             <input type="file" name="thumbnail" id="thumbnail">
         </div>
-        <button type="submit">저장하기</button>
+        <div class="save_button">
+            <button type="submit">저장하기</button>
+        </div>
     </form>
 </div>
 
+{% endblock %}
+
+{% block script %}
+<script>
+    var simplemed = new SimpleMDE({ 
+        spellChecker: false,
+        element: document.getElementById("content")});
+</script>
 {% endblock %}

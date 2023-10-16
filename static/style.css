@@ -18,8 +18,8 @@ a {
     color: black;
     text-decoration: none;
 }
-/* header.html */
 
+/* header.html */
 header {
     display: flex;
     justify-content: space-between;
@@ -45,12 +45,10 @@ header {
     font-size: 20px;
     margin-left: 10px;
 }
-
 /* header.html */
 
 
 /* movie_list.html, book_list.html */
-
 .container {
     width: 1220px;
     height: 100%;
@@ -192,7 +190,6 @@ header {
 
 
 /* movie_detail.html, book_detail.html */
-
 .main_wrapper {
     width: 1200px;
     height: auto;
@@ -202,6 +199,7 @@ header {
 .detail_header {
     display: flex;
     flex-direction: column;
+    margin-top: 20px;
 }
 
 .title {
@@ -213,6 +211,9 @@ header {
     font-size: 40pt;
 }
 .title h3 {
+    margin: 0;
+}
+.title h6 {
     margin: 0;
 }
 .data_wrapper {
@@ -270,8 +271,53 @@ header {
 
 /* movie_detail.html, book_detail.html */
 
-/* login.html */
 
+/* movie_form.html, book_form.html */
+#title {
+    width: 100%;
+    height: 50px;
+    border: 0;
+    border-bottom: 1px solid black;
+    background-color: azure;
+    font-size: 30pt;
+    font-weight: 600;
+    font-family: 'Nanum Gothic', sans-serif;
+    outline: 0;
+    margin-bottom: 20px;
+    margin-top: 102px;
+}
+
+#book_author {
+    width: 100%;
+    height: 50px;
+    border: 0;
+    border-bottom: 1px solid black;
+    background-color: azure;
+    font-size: 20pt;
+    font-weight: 600;
+    font-family: 'Nanum Gothic', sans-serif;
+    outline: 0;
+    margin-bottom: 20px;
+}
+
+.save_button {
+    display: flex;
+    justify-content: end;
+}
+.save_button button {
+    width: 100px;
+    height: 50px;
+    border: 0;
+    border-radius: 5px;
+    background-color: #9aafd9;
+    color: white;
+    font-size: 12pt;
+    cursor: pointer;
+}
+/* movie_form.html, book_form.html */
+
+
+/* login.html */
 .login_wrapper {
     display: flex;
     justify-content: center;
@@ -308,6 +354,7 @@ header {
     color: white;
 }
 /* login.html */
+
 
 /* signup.html */
 .signup_wrapper {
