@@ -11,7 +11,8 @@ from ..forms import MovieForm
 def movie_index(request):
     page = request.GET.get('page', '1')
     query = request.GET.get('query', '')
-    movie_list = Movie.objects.order_by('create_date')
+    sort = request.GET.get('sort', 'create_date')
+    movie_list = Movie.objects.order_by(sort)
     if query:
         movie_list = movie_list.filter(
             Q(title__icontains=query) |
@@ -20,7 +21,7 @@ def movie_index(request):
         ).distinct()
     paginator = Paginator(movie_list, 10)
     page_obj = paginator.get_page(page)
-    context = {'movie_list': page_obj, 'page': page, 'query': query}
+    context = {'movie_list': page_obj, 'page': page, 'query': query, 'sort': sort}
     return render(request, 'archive/movie_list.html', context)
 
 
@@ -34,7 +35,6 @@ def movie_detail(request, movie_id):
 def movie_create(request):
     if request.method == 'POST': # POST 요청 question_form.html 에서 저장하기 버튼을 클릭 했을 때
         form = MovieForm(request.POST, request.FILES)
-        print(request.FILES)
         if form.is_valid():
             movie = form.save(commit=False)
             movie.author = request.user

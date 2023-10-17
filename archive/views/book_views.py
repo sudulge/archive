@@ -11,7 +11,8 @@ from ..forms import BookForm
 def book_index(request):
     page = request.GET.get('page', '1')
     query = request.GET.get('query', '')
-    book_list = Book.objects.order_by('create_date')
+    sort = request.GET.get('sort', 'create_date')
+    book_list = Book.objects.order_by(sort)
     if query:
         book_list = book_list.filter(
             Q(title__icontains=query) |
@@ -21,7 +22,7 @@ def book_index(request):
         ).distinct()
     paginator = Paginator(book_list, 10)
     page_obj = paginator.get_page(page)
-    context = {'book_list': page_obj, 'page': page, 'query': query}
+    context = {'book_list': page_obj, 'page': page, 'query': query, 'sort': sort}
     return render(request, 'archive/book_list.html', context)
 
 

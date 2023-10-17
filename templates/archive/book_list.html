@@ -23,6 +23,11 @@
     </div>
     
     <div class="list_wrapper">
+        <div class="sort_wrapper">
+            <a class="sort_option" data-sort="create_date" href="javascript:void(0)">날짜 순</a>
+            <a class="sort_option" data-sort="-create_date" href="javascript:void(0)">최신 순</a>
+            <a class="sort_option" data-sort="title" href="javascript:void(0)">가나다 순</a>
+        </div>
         {% if book_list %}
             <ul>
             {% for book in book_list %}
@@ -86,6 +91,7 @@
 <form id="searchForm" method="get" action="{% url 'archive:book_index' %}">
     <input type="hidden" id="query" name="query" value="{{ query|default_if_none:'' }}">
     <input type="hidden" id="page" name="page" value="{{ page }}">
+    <input type="hidden" id="sort" name="sort" value="{{ sort }}">
 </form>
 {% endblock %}
 
@@ -103,6 +109,16 @@
         document.getElementById('query').value = document.getElementById('search_query').value;
         document.getElementById('page').value = 1;
         document.getElementById('searchForm').submit();
+    });
+    const sort_options = document.getElementsByClassName("sort_option");
+    Array.from(sort_options).forEach(function(element) {
+        if (element.dataset.sort == document.getElementById('sort').value) {
+            element.className += ' current_option';
+        }
+        element.addEventListener('click', function() {
+            document.getElementById('sort').value = this.dataset.sort;
+            document.getElementById('searchForm').submit();
+        });
     });
 </script>
 

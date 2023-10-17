@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load archive_filter %}
 {% block content %}
 
 <div class="main_wrapper">
@@ -52,7 +53,7 @@
             {% endif %}
         </div>
         <div class="text_area">
-            {{ book.content }}
+            {{ book.content|mark }}
         </div>
     </div>
 </div>

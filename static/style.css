@@ -60,7 +60,6 @@ header {
     box-sizing: border-box;
 }
 
-
 .tab_container {
     display: flex;
     justify-content: space-between;
@@ -125,6 +124,26 @@ header {
     font-size: 20pt;
 }
 
+.sort_wrapper {
+    margin-left: 10px;
+    margin-bottom: 10px;
+}
+.sort_wrapper a {
+    display: inline-block;
+    width: 80px;
+    height: 40px;
+    background-color: #9aafd9;
+    border-radius: 5px;
+    text-align: center;
+    line-height: 40px;
+    font-size: 13pt;
+}
+
+.sort_wrapper .current_option {
+    background-color: cadetblue;
+    color: white;
+}
+
 .list_wrapper {
     width: 100%;
     height: auto;
@@ -174,7 +193,7 @@ header {
 .page_item {
     width: 40px;
     height: 30px;
-    font-size: 18px;;
+    font-size: 18px;
     text-align: center;
     border-radius: 5px;
 }
@@ -285,6 +304,7 @@ header {
     outline: 0;
     margin-bottom: 20px;
     margin-top: 102px;
+    padding-left: 10px;
 }
 
 #book_author {
@@ -298,6 +318,7 @@ header {
     font-family: 'Nanum Gothic', sans-serif;
     outline: 0;
     margin-bottom: 20px;
+    padding-left: 10px;
 }
 
 .save_button {
