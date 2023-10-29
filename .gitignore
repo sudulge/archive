@@ -4,3 +4,4 @@ media/archive/book/**
 !/media/archive/book/book_default_thumbnail.png
 media/archive/movie/**
 !/media/archive/movie/movie_default_thumbnail.png
+logs
